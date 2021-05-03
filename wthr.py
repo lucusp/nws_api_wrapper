@@ -12,7 +12,7 @@ class weather:
         req = requests.get(f'{self.base_url}/stations/{station}/observations', verify=verify, headers=self.headers)
         json_data = json.loads(req.text)
 
-        arr = []
+        arr = [{'station':f'{station}','local_timezone':f'{time_zone}'}]
 
         for items in json_data['features']:
             obv_time = items['properties']['timestamp']
