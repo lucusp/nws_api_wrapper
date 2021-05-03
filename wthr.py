@@ -7,7 +7,7 @@ import pytz
 class weather:
     def __init__(self):
         self.base_url = 'https://api.weather.gov'
-        self.headers = {'User-Agent':'CenterPointEnergy lucus.pettigrew@centerpointenergy.com'}
+        self.headers = {'User-Agent':'Your Name email@email.com'}
 
     def getHourlyTemps(self, station):
         req = requests.get(f'{self.base_url}/stations/{station}/observations', verify=True, headers=self.headers)
