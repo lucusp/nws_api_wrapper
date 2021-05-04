@@ -3,5 +3,6 @@ import pandas as pd
 
 weather = weather()
 df = pd.DataFrame(weather.getHourlyTemps(station='KEVV')['temps'])
+df['temp'] = df['temp'].round(0)
 
-print(df.head())
+print(weather.getStationHourlyForecast(station='KEVV'))
