@@ -20,7 +20,7 @@ class weather:
         json_data = json.loads(req.text)
         return json_data
 
-    def getAllObservations(self, station):
+    def getStationAllObservations(self, station):
         return self.__get_data(self.observations_all.format(station=str(station)))
         
     def getStationCoordinates(self, station):
@@ -31,7 +31,7 @@ class weather:
         point1, point2 = self.getStationCoordinates(station=station)
         return self.__get_data(self.__get_data(self.geopoints.format(point1=str(point2),point2=str(point1)))['properties']['forecastHourly'].replace(self.base_url, ''))
 
-    def getHourlyTemps(self, station, time_zone='US/Central', type='F'):
+    def getStationHourlyTemps(self, station, time_zone='US/Central', type='F'):
         """
             use the private __get_data to get our observations url
             create a useful dictionary for end use giving metadata stationid and timezone
