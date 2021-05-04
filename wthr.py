@@ -29,7 +29,9 @@ class weather:
 
     def getStationHourlyForecast(self, station):
         point1, point2 = self.getStationCoordinates(station=station)
-        return self.__get_data(self.__get_data(self.geopoints.format(point1=str(point2),point2=str(point1)))['properties']['forecastHourly'].replace(self.base_url, ''))
+        return self.__get_data(self.__get_data(
+            self.geopoints.format(point1=str(point2),point2=str(point1))
+            )['properties']['forecastHourly'].replace(self.base_url, ''))
 
     def getStationHourlyTemps(self, station, time_zone='US/Central', type='F'):
         """
