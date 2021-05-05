@@ -33,7 +33,7 @@ class weather:
             self.geopoints.format(point1=str(point2),point2=str(point1))
             )['properties']['forecastHourly'].replace(self.base_url, ''))
 
-    def getStationHourlyTemps(self, station, time_zone='US/Central', type='F'):
+    def getStationHourlyTemps(self, station, time_zone='US/Central', type='F', strip_timezone=True):
         """
             use the private __get_data to get our observations url
             create a useful dictionary for end use giving metadata stationid and timezone
@@ -53,10 +53,15 @@ class weather:
 
         for items in data['features']:
             obv_time = items['properties']['timestamp']
+
+            # convert to desired timezone (intial times are in GMT/UTC)
             _obv_time = datetime.strptime(obv_time, '%Y-%m-%dT%H:%M:%S+00:00')
             _obv_time = _obv_time.replace(tzinfo=timezone.utc)
             local_timezone = pytz.timezone(time_zone)
             _obv_time = _obv_time.astimezone(local_timezone)
+
+            # strip timezone info from final date/time for end use by pandas, etc.
+            _obv_time = _obv_time.replace(tzinfo=None)
             date, time = str(_obv_time).split(' ')
             time = time.split('-')[0]
             try:
