@@ -58,6 +58,9 @@ class weather:
             local_timezone = pytz.timezone(time_zone)
             _obv_time = _obv_time.astimezone(local_timezone)
             date, time = str(_obv_time).split(' ')
-            data_dict['temps'].append({'date': date, 'time': time, 'temp': (int(items['properties']['temperature']['value'])*mult)+add})
-
+            time = time.split('-')[0]
+            try:
+                data_dict['temps'].append({'date': date, 'time': _obv_time, 'temp': (items['properties']['temperature']['value']*mult)+add})
+            except:
+                pass
         return data_dict
