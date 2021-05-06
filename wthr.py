@@ -65,7 +65,7 @@ class weather:
             date, time = str(_obv_time).split(' ')
             time = time.split('-')[0]
             try:
-                data_dict['temps'].append({'date': date, 'time': _obv_time, 'temp': (items['properties']['temperature']['value']*mult)+add})
+                data_dict['temps'].append({'date': date, 'time': _obv_time, 'temp': round((items['properties']['temperature']['value']*mult)+add,0)})
             except:
                 pass
         return data_dict
