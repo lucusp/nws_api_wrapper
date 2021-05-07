@@ -6,3 +6,6 @@ test_weather.py
 
 # ignore any df
 *.xlsx
+
+# ignore pycache
+__pycache__
