@@ -3,3 +3,6 @@
 
 # ignore test_weather.py
 test_weather.py
+
+# ignore any df
+*.xlsx
