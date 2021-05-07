@@ -1,5 +1,5 @@
 # ignore notebooks
-.ipynb
+*.ipynb
 
 # ignore test_weather.py
 test_weather.py
