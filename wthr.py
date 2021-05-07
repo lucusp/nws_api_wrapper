@@ -9,7 +9,11 @@ class weather:
         self.headers = {'User-Agent':'Your Name email@email.com'}
 
         # URLs
+        self.glossary_terms = 'glossary'
+        self.icons = 'icons'
+        self.stations = 'stations?state={state_abbr}&limit={num_stations}'.format(state_abbr="{state_abbr}", num_stations="{num_stations}")
         self.observations_all = 'stations/{station}/observations'.format(station="{station}")
+        self.observations_latest = 'stations/{station}/observations/latest'.format(station="{station}")
         self.geopoints = 'points/{point1},{point2}'.format(point1="{point1}",point2="{point2}")
 
     def __get_data(self, url, verify=True):
@@ -20,9 +24,27 @@ class weather:
         json_data = json.loads(req.text)
         return json_data
 
+    # /////////////////////////////////////
+    # set of general api calls from nws api
+    # /////////////////////////////////////
+    def getGlossaryTerms(self):
+        return self.__get_data(self.glossary_terms)['glossary']
+
+    def getIcons(self):
+        return self.__get_data(self.icons)['icons']
+
+    def getStations(self, state_abbr, num_stations):
+        return self.__get_data(self.stations.format(state_abbr=state_abbr, num_stations=num_stations))
+
     def getStationAllObservations(self, station):
-        return self.__get_data(self.observations_all.format(station=str(station)))
-        
+        return self.__get_data(self.observations_all.format(station=str(station)))['features']
+
+    def getStationLatestObservation(self, station):
+        return self.__get_data(self.observations_latest.format(station=str(station)))
+    
+    # ////////////////////////////////////
+    # set of custom/specific data requests
+    # ////////////////////////////////////      
     def getStationCoordinates(self, station):
         data = self.__get_data(self.observations_all.format(station=str(station)))
         return data['features'][0]['geometry']['coordinates']
