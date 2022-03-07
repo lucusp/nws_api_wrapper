@@ -3,7 +3,7 @@ import json
 from datetime import datetime, timedelta, timezone
 import pytz
 
-class weather:
+class Weather:
     def __init__(self):
         self.base_url = 'https://api.weather.gov/'
         self.headers = {'User-Agent':'Your Name email@email.com'}
@@ -55,18 +55,18 @@ class weather:
             self.geopoints.format(point1=str(point2),point2=str(point1))
             )['properties']['forecastHourly'].replace(self.base_url, ''))
 
-    def getStationHourlyTemps(self, station, time_zone='US/Central', type='F', strip_timezone=True):
+    def getStationHourlyTemps(self, station, time_zone='US/Central', temp_type='F', strip_timezone=True):
         """
             use the private __get_data to get our observations url
-            create a useful dictionary for end use giving metadata stationid and timezone
+            create a dictionary for end use giving metadata stationid and timezone
             convert to Fahrenheit, return the data by hourly observation
         """
         data = self.__get_data(self.observations_all.format(station=str(station)))
         
         data_dict = {'station':f'{station}', 'local_timezone':f'{time_zone}', 'temps':[]}
 
-        # to convert to F we multiply C * 1.8 and + 32 to the result
-        if type == 'F':
+        # to convert to F multiply C * 1.8 and + 32 to the result
+        if temp_type == 'F':
             mult = 1.8
             add = 32
         else:
